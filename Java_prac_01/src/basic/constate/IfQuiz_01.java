@@ -23,9 +23,9 @@ public class IfQuiz_01 {
         Scanner sc = new Scanner(System.in);
         System.out.println("키를 입력하시오 : ");
         height = sc.nextInt();
-        System.out.println("나이를 입력하시오 : ");
-        age = sc.nextInt();
         if(height >= 140){
+            System.out.println("나이를 입력하시오 : ");
+            age = sc.nextInt();
             if(age>=8){
                 System.out.println("탑승가능합니다.");
             }
