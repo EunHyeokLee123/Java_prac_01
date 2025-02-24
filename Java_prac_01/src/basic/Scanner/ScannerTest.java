@@ -1,4 +1,4 @@
-package basic.TwoWeek;
+package basic.Scanner;
 
 import java.util.Scanner;
 
