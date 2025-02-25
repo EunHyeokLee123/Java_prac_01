@@ -2,7 +2,7 @@ package basic.LoopTest;
 
 import java.util.Scanner;
 
-public class WhileQuiz_03 {
+public class WhileQuiz_02 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int a1, a2;
