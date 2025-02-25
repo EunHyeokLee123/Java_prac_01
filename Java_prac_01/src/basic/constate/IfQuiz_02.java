@@ -1,9 +1,9 @@
-package basic.LoopTest;
+package basic.constate;
 
 import java.util.Scanner;
 
 
-public class WhileQuiz_01 {
+public class IfQuiz_02 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int a1, a2, a3;
