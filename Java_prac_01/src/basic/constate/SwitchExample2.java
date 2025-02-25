@@ -37,4 +37,48 @@ public class SwitchExample2 {
 
         sc.close();
     }
+
+    public static class SwitchQuiz {
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            int a1, a2; String s1;
+            System.out.println("정수1을 입력하시오. ");
+            a1 = sc.nextInt();
+            System.out.println("연산자를 입력하시오. ");
+            s1 = sc.next();
+            System.out.println("정수2를 입력하시오. ");
+            a2 = sc.nextInt();
+            int result = 0; boolean flag = true;
+            switch(s1){
+                case "+":
+                    result = a1 + a2;
+                    break;
+                case "-":
+                    result = a1 - a2;
+                    break;
+                case "*":
+                    result = a1 * a2;
+                    break;
+                case "/":
+                    if(a2==0){
+                        System.out.println("0으로 나눌 수는 없습니다.");
+                        flag = false;
+                        break;
+                    }
+                    result = a1/a2;
+                default:
+                    System.out.println("옳지 않은 연산자를 입력하셨습니다.");
+                    flag = false;
+                    break;
+            }
+            if(flag){
+                System.out.printf("%d "+s1+" %d = %d 입니다.", a1, a2, result);
+            }
+            else{
+                System.out.printf("%d "+s1+" %d 는 계산할 수 없습니다.", a1, a2);
+            }
+
+            sc.close();
+        }
+    }
 }

@@ -8,8 +8,8 @@ public class Whilequiz_02 {
         System.out.println("정수를 하나 입력하세요. ");
         int tar = sc.nextInt();
         boolean result = true;
-        for(int i=2; i<tar;i++){
-            if(tar%i==0){
+        for(int i = 2; i < tar; i++){
+            if(tar % i == 0){
                 result = false;
             }
         }
