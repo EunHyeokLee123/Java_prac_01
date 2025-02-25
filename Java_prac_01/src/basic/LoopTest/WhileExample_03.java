@@ -40,10 +40,11 @@ public class WhileExample_03 {
         System.out.println("\n==============================");
         System.out.print("정수 하나 입력해 ");
         int tar = sc.nextInt();
-        int result = 1;
+        long result = 1;
         // 정수 하나 입력받아서 팩토리얼 값 출력
         for (int i = 1; i <= tar ; i++) {
-            result = result * tar;
+            result = result * i;
+            //System.out.printf("%d \n", result);
         }
 
         System.out.printf("팩토리얼 값은 %d 이다.\n", result);
