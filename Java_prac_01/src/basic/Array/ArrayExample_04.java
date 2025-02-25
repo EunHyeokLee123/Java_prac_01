@@ -28,12 +28,13 @@ public class ArrayExample_04 {
         */
             if(foods[i].equals(tar)){
                 idx = i;
+                break;  // 찾았으면 for문 종료
             }
         }
         if(idx != -1) {
             System.out.printf(tar + "은 %d번째인덱스에 있습니다. \n", idx);
         }
-        else{
+        else {
             System.out.println(tar+"은 배열에 없습니다.");
         }
 
