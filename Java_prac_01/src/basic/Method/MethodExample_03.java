@@ -47,6 +47,26 @@ public class MethodExample_03 {
         return result;
     }
 
+     /*
+         - 반환값이 없는 void 타입의 메서드는 값이 돌아오지 않기 때문에
+          실행 결과를 변수에 저장할 수 없고, 다른 메서드의 매개값으로도
+          사용이 불가능합니다.
+         - 반드시 단독 호출하여 사용해야 합니다.
+         - void 메서드는 단순히 동작을 지시하는 역할을 수행합니다.
+         */
+
+    // 아무것도 리턴하지 않는 경우 void로 리턴타입 선언
+    static void divide(int n1, int n2){
+        int result;
+        if(n2 !=0) {
+            result = n1 / n2;
+            System.out.printf("%d / %d = %d \n", n1, n2, result);
+        }
+        else {
+            System.out.println("0으로는 못 나눕니다.");
+        }
+    }
+
     public static void main(String[] args) {
 
         int r1 = add(3, 6);
@@ -56,5 +76,9 @@ public class MethodExample_03 {
         for (int i : arr) {
             System.out.printf("%d ", i);
         }
+        System.out.println("=================");
+        int a1 = 71; int a2 = 55;
+        divide(a1, a2);
+        System.out.printf("a1 = %d, a2 = %d \n", a1, a2);
     }
 }
