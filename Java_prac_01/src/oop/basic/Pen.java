@@ -6,6 +6,16 @@ public class Pen {
     String Color;  // 색상
     String No;  // 일련번호
 
+    Pen(){
+
+    }
+
+    Pen(String col, String no, int pri){
+        Color = col;
+        No = no;
+        price = pri;
+    }
+
     // 객체의 기능을 표현한 함수를 메소드라고 부름.
     void write(){
         System.out.println(Color + "색 글을 씁니다.");
