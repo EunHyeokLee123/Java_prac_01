@@ -6,6 +6,8 @@ public class InfiniteLoopQuiz_01 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int cor = 0; int wro = 0;
+        // String str = "12";
+        // int tmp1 = Integer.parseInt(str);
         Dae : while(true){
             int num1 = (int) (Math.random()*100 + 1);
             int num2 = (int) (Math.random()*100 + 1);
