@@ -1,4 +1,4 @@
-package oop.Constructor;
+package oop.constructor;
 
 public class Phone {
     String model;
