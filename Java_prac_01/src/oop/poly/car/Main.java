@@ -81,5 +81,12 @@ public class Main {
         // 자식 클래스의 메소드는 사용 불가능
         //    kimCar3.activeAutoPilot();
 
+        System.out.println("=======================");
+
+        CarShop shop = new CarShop();
+        shop.carPrice(p1);
+        shop.carPrice(s1);
+        shop.carPrice(t1);
+
     }
 }
