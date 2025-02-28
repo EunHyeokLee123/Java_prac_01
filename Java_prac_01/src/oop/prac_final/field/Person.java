@@ -1,4 +1,4 @@
-package oop.prac_final;
+package oop.prac_final.field;
 
 public class Person {
 
