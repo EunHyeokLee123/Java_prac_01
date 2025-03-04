@@ -1,4 +1,4 @@
-package oop.Quiz_class;
+package oop.Quiz_class_01;
 
 public class PasswordManager {
 
