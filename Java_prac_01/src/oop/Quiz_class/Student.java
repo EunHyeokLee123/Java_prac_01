@@ -10,7 +10,7 @@ public class Student {
     }
 
     public void setName(String name) {
-        if(name.equals(null) || name.isEmpty()){
+        if(name==null || name.isEmpty()){
             return;
         }
         this.name = name;
@@ -21,7 +21,7 @@ public class Student {
     }
 
     public void setStudentId(String studentID) {
-        if(studentID.equals(null) || studentID.isEmpty()){
+        if(studentID==null || studentID.isEmpty()){
             return;
         }
         this.studentID = studentID;
@@ -32,7 +32,7 @@ public class Student {
     }
 
     public void setDepartment(String department) {
-        if(department.equals(null) || department.isEmpty()){
+        if(department==null || department.isEmpty()){
             return;
         }
         this.department = department;

@@ -26,7 +26,7 @@ public class Car {
     }
 
     public void setYear(int year) {
-        if(year > 2025)
+        if(year > 2025 || year < 1900)
             return;
         this.year = year;
     }
