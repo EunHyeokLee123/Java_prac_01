@@ -41,12 +41,39 @@ public class ArrayListExample {
         // 한번에 객체 많이 추가하기
         Collections.addAll(arr1,4, 5, 88, 99, 1, 123, 456);
 
+        // Collections.frequency(List, target) 타겟이 몇 개 있는지
+        System.out.println("99점 학생 수 : " + Collections.frequency(arr1, 99));
+
+        System.out.println("최댓값은 : " + Collections.max(arr1));
+        System.out.println("최솟값은 : " + Collections.min(arr1));
+        // 오름차 정렬
+        Collections.sort(arr1);
+        System.out.println(arr1.toString());
+
+        // 내림차 정렬 -> sort 후 reverse
+        Collections.reverse(arr1);
+        System.out.println(arr1.toString());
+        // 한번에 내림차 정렬
+        Collections.sort(arr1, Collections.reverseOrder());
+        System.out.println(arr1.toString());
+
+        // 두 요소의 위치를 교체 swap(list, index1, index2)
+        Collections.swap(arr1, 3, 5);
+        System.out.println(arr1.toString());
+
+        // 리스트 내의 요소를 무작위로 섞기
+        Collections.shuffle(arr1);
+        System.out.println(arr1);
+
+        // 원하는 객체로 컬렉션을 전부 초기화
+        Collections.fill(arr1, 4000);
+        System.out.println(arr1.toString());
+
+
         // asList로 선언한 리스트는 값의 추가, 삭제가 불가능하다.
-        // 고정형 리스트가 됨. 값의 수정은 가능.
+        // 고정형 리스트가 됨. 값의 수정은 가능함.(고정된 크기를 가짐.)
         List<Integer> rvr = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
 
-        System.out.println("arr1 = " + arr1);
-        System.out.println(arr1.toString());
 
         System.out.println("===========================================");
 
