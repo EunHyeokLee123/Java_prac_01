@@ -22,5 +22,18 @@ public class Main {
         System.out.println(park.getName() + "의 주력 언어는 컴파일 언어인가? "
                 + park.getLang().isCompileLang());
 
+        System.out.println("==================================");
+
+        Language[] lan = Language.values();
+        for (Language language : lan) {
+            System.out.println(language);
+        }
+
+        // ordinal() : 열거형 타입에 열거되어 있는 순서를 정수값으로 리턴
+        System.out.println(park.getLang().ordinal());
+
+        // valueOf("str") : 매개값으로 전달된 문자열과 일치하는 요소를 리턴
+        System.out.println(Language.valueOf("CPP"));
+
     }
 }
