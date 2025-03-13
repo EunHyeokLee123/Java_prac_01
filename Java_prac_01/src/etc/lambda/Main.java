@@ -86,5 +86,35 @@ public class Main {
         for (Integer i : it) {
             System.out.println(i);
         }
+        System.out.println("=======================");
+
+        List<String> strs = List.of("문동주", "김범수", "김민우", "이민우",
+                "주현상", "노시환");
+        List<String> dd = filterAny(strs, ss -> !ss.equals("노시환"));
+        for (String s : dd) {
+            System.out.println(s);
+        }
+        System.out.println("========================");
+
+        // 사과의 색상만 뽑아서 리스트로 받고 싶다.
+        List<Color> colors = MappingApple.mappingAppleByColor(appleBasket);
+        for (Color color : colors) {
+            System.out.println(color.toString());
+        }
+
+        System.out.println("==========================");
+        List<Integer> mapped = MappingApple.map(appleBasket,
+                (apple -> apple.getWeight()));
+        for (Integer i : mapped) {
+            System.out.println(i);
+
+        }
+
+        List<Character> mapped1 = MappingApple.map(strs, s -> s.charAt(0));
+        for (Character c : mapped1) {
+            System.out.println(c);
+        }
+
+
     }
 }
