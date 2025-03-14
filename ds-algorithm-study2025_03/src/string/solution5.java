@@ -6,23 +6,18 @@ public class solution5 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
-        String tmp = str.replaceAll("[^a-zA-Z0-9 ]","");
-        String front; String back;
-        if(tmp.length()%2==0){
-            front = tmp.substring(0,tmp.length()/2).toLowerCase();
-            back = tmp.substring(tmp.length()/2).toLowerCase();
+        // 알파벳만 추출할 문자열을 받을 변수
+        String t2 = "";
+        for (int i = 0; i < str.length(); i++) {
+            if(Character.isAlphabetic(str.charAt(i)))
+                t2 += str.charAt(i);
         }
-        else{
-            front = tmp.substring(0,tmp.length()/2).toLowerCase();
-            back = tmp.substring(tmp.length()/2+1).toLowerCase();
-        }
-
-        StringBuilder sb2 = new StringBuilder(back);
+        t2 = t2.toLowerCase();
+        // reverse 사용을 위해 Stringbuilder 객체 선언
+        StringBuilder sb2 = new StringBuilder(t2);
         StringBuilder reverse = sb2.reverse();
-        back = String.valueOf(reverse);
 
-        boolean result = front.equals(back);
-        if(result)
+        if(t2.contentEquals(reverse))
             System.out.println("YES");
         else
             System.out.println("NO");

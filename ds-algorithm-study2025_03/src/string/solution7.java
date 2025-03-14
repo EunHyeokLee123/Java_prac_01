@@ -10,7 +10,6 @@ public class solution7 {
         Scanner sc = new Scanner(System.in);
 
         String line = sc.nextLine();
-
         int idx = 0;
         while(idx < line.length()){
             char tar = line.charAt(idx);
