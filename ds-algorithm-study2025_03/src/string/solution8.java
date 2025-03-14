@@ -1,7 +1,9 @@
 package string;
 
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class solution8 {
 
@@ -18,11 +20,12 @@ public class solution8 {
         return (char)sum;
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int count = sc.nextInt(); int len = 7;
-        sc.nextLine();
-        String line = sc.nextLine();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int count = Integer.parseInt(br.readLine());
+        String line = br.readLine();
+
+        final int len = 7;
 
         char[] result = new char[count];
         for (int i = 0, index = 0; i < line.length(); i += len, index++) {
@@ -36,6 +39,5 @@ public class solution8 {
         System.out.println(new String(result).toUpperCase());
 
 
-        sc.close();
     }
 }

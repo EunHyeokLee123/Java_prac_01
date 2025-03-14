@@ -1,15 +1,28 @@
 package string;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class solution6 {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String input = sc.next();
-        String tar = sc.next();
+    public static void main(String[] args) throws IOException {
+
+        // Scanner는 정규표현식을 처리하는 등 기능이 많음 -> 입력이 많으면 속도가 저하됨.
+        // BufferedReader는 단순히 입력값을 읽어오는 것이기에 속도가 빠름.
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        // 한 줄을 입력
+        String sr = br.readLine();
+        // 구분자를 기준으로 구분됨.
+        StringTokenizer st = new StringTokenizer(sr, " ");
+
+        String input = st.nextToken();
+        String tar = st.nextToken();
+
         // input에 있는 target의 인덱스를 담을 리스트
         // 타겟의 개수를 모르기에 배열 대신 리스트 사용
         List<Integer> index = new ArrayList<>();
@@ -37,7 +50,7 @@ public class solution6 {
         for (int i : distance) {
             System.out.printf("%d ", i);
         }
-        sc.close();
+
     }
 
 }
