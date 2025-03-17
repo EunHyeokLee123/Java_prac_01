@@ -1,7 +1,10 @@
 package etc.stream.quiz;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -39,12 +42,20 @@ public class Main {
                 .toList()
                 .forEach(System.out::println);
 
+        // toset을 통해 set으로 받을 수 있음. 중복 방지
+        transactions.stream()
+                        .map(d->d.getTrader().getCity())
+                        .collect(Collectors.toSet())
+                        .forEach(System.out::println);
+
+
         System.out.println("=============================");
 
         // 연습 3: Cambridge에 근무하는 모든 거래자(Trader)를 찾아
         // 거래자 리스트로 이름순으로 오름차 정렬.
 
         transactions.stream()
+                // .equalsIgnoreCase -> 대소문자 구분 없이 스펠링만 동일하면 동일처리
                 .filter(d-> d.getTrader().getCity().equals("Cambridge"))
                 .sorted(Comparator.comparing(d->d.getTrader().getName()))
                 .toList()
@@ -56,9 +67,9 @@ public class Main {
         // 알파벳순으로  오름차 정렬하여 반환
 
         List<String> list = transactions.stream()
-                .sorted(Comparator.comparing(d -> d.getTrader().getName()))
                 .map(d -> d.getTrader().getName())
                 .distinct()
+                .sorted()
                 .toList();
 
         System.out.println(list.toString());
@@ -83,19 +94,20 @@ public class Main {
 
         // 연습 7: 모든 거래에서 최고거래액은 얼마인가?
 
-        Transaction maxTr1 = transactions.stream()
-                .max(Comparator.comparing(d -> d.getValue()))
-                .get();
-        System.out.println("maxTr1 = " + maxTr1.getValue());
-        System.out.println("================================");
+        int max = transactions.stream()
+                .mapToInt(Transaction::getValue)
+                .max()
+                .getAsInt();
+        System.out.println("max = " + max);
+        System.out.println("=============================");
 
         // 연습 8. 가장 작은 거래액을 가진 거래정보 탐색
-
-        Transaction minTr = transactions.stream()
-                .min(Comparator.comparing(d -> d.getValue()))
-                .get();
-        System.out.println("minTr = " + minTr);
-        System.out.println("============================");
+        int min = transactions.stream()
+                .mapToInt(Transaction::getValue)
+                .min()
+                .getAsInt();
+        System.out.println("min = " + min);
+        System.out.println("==========================");
 
         // 연습 9. 거래액이 500 이상인 거래들만 필터링하고,
         // 해당 거래의 정보를 출력하시오.
@@ -111,11 +123,46 @@ public class Main {
         // 출력값: 752.0
 
         double asDouble = transactions.stream()
-                .filter(d -> d.getValue() > minTr.getValue())
-                .mapToInt(d -> d.getValue())
+                .filter(d -> d.getValue() > min)
+                .mapToInt(Transaction::getValue)
                 .average()
                 .getAsDouble();
         System.out.println("평균 = " + asDouble);
+        System.out.println("===========================");
+
+        // 연습 11. cambridge에 근무하는 모든 트레이더의 내역을 연도별로 분류
+        /*
+        Year: 2021
+        {Trader: Brian in Cambridge, year: 2021, value: 300}
+        {Trader: Raoul in Cambridge, year: 2021, value: 400}
+        ...
+
+        Year: 2022
+        {Trader: Raoul in Cambridge, year: 2022, value: 1000}
+        ...
+         */
+
+        // key: 거래연도, value: 거래내역을 담은 리스트
+        HashMap<Integer, List<Transaction>> groupByYearMap = new HashMap<>();
+
+        List<Transaction> trs2021 = transactions.stream()
+                .filter(trs -> trs.getYear() == 2021)
+                .toList();
+
+        List<Transaction> trs2022 = transactions.stream()
+                .filter(trs -> trs.getYear() == 2022)
+                .toList();
+
+        groupByYearMap.put(2021, trs2021);
+        groupByYearMap.put(2022, trs2022);
+
+        Map<Integer, List<Transaction>> camTr = transactions.stream()
+                .filter(d -> d.getTrader().getCity().equals("Cambridge"))
+                .collect(Collectors.groupingBy(Transaction::getYear));
+        camTr.forEach((key, value) -> {
+            System.out.println("Year: "+key);
+            value.forEach(System.out::println);
+        });
 
     }
 
