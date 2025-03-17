@@ -12,7 +12,6 @@ public class solution5 {
             if(Character.isAlphabetic(str.charAt(i)))
                 t2 += str.charAt(i);
         }
-        t2 = t2.toLowerCase();
         // reverse 사용을 위해 Stringbuilder 객체 선언
         StringBuilder sb2 = new StringBuilder(t2);
         StringBuilder reverse = sb2.reverse();
