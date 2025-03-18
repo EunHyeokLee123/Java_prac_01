@@ -33,8 +33,8 @@ public class solution_03 {
             check[idx] = false;
             DFS(idx + 1);
 
-            check[idx] = true;
             // idx를 가지지 않는 경우
+            check[idx] = true;
             DFS(idx + 1);
         }
 
