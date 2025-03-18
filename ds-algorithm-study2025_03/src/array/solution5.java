@@ -11,21 +11,16 @@ public class solution5 {
         int idx = Integer.parseInt(br.readLine());
         int[][] it = new int[idx][idx];
         for (int i = 0; i < idx; i++) {
-            String tmp = br.readLine();
-            StringTokenizer st = new StringTokenizer(tmp);
+            StringTokenizer st = new StringTokenizer(br.readLine());
             for (int j = 0; j < idx; j++) {
                 it[i][j] = Integer.parseInt(st.nextToken());
             }
         }
         int max = 0;
-        // 대각선 먼저, 주대각성분의 합
+        int temp = 0;
+        // 대각선 먼저, 주대각성분의 합, 반대 성분까지
         for (int k = 0; k < idx; k++) {
             max += it[k][k];
-        }
-
-        int temp = 0;
-        // 반대 대각선의 합
-        for (int k = 0; k < idx; k++) {
             temp += it[4-k][k];
         }
         // 최대값 최신화
@@ -36,8 +31,8 @@ public class solution5 {
             int s1 = 0; // 가로
             int s2 = 0; // 세로
             for (int j = 0; j < idx; j++) {
-                s1 += it[i][j];
-                s2 += it[j][i];
+                s1 += it[i][j]; // 가로합
+                s2 += it[j][i]; // 세로합
             }
             if(s1 > s2){
                 if(max < s1)

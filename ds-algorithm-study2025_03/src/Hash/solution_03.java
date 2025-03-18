@@ -30,9 +30,13 @@ public class solution_03 {
                 }
             }
         }
+        // 내림차순으로 볼 수 있는 iterator
         Iterator<Integer> it = result.descendingIterator();
-        it.next(); it.next();
-        Integer re = it.next();
+        Integer re;
+        for (int i = 1; i <= tar-1 ; i++) {
+            it.next();
+        }
+        re = it.next();
         System.out.println(re);
 
         br.close();
