@@ -16,17 +16,19 @@ public class solution_03 {
                 while(stack.peek() != '('){
                     stack.pop();
                 }
+                // 괄호 제거
                 stack.pop();
             }
             else{
+                // 문자는 stack에 push
                 stack.push(arr[i]);
             }
         }
         StringBuilder result = new StringBuilder();
         for (Character c : stack) {
-            result.append(c);
+            result.insert(0, c);
         }
-        System.out.println(result.reverse());
+        System.out.println(result);
 
 
         br.close();

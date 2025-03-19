@@ -14,10 +14,9 @@ public class Main {
     static LinkedList<Integer> list = new LinkedList<>();
     static int temp = 0;
 
-
+    // 최대한 긴 길을 찾는 걸로 가자
     public static void DFS(int x, int y){
-
-
+        
     }
 
 
