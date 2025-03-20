@@ -17,31 +17,23 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        int start = 0; int end = len - 1;
-        while(start < end){
-            Set<Integer> set = new HashSet<>();
-            for (int i = start; i <= end ; i++) {
-                set.add(arr[i]);
-            }
-            if(set.size() <= 2){
-                System.out.println(end - start + 1);
-                break;
-            }
-            else{
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int max = 0; int start = 0;
+        for (int right = 0; right < len; right++) {
+            map.put(arr[right], map.getOrDefault(arr[right], 0) + 1);
+
+            while(map.size() > 2){
+                map.put(arr[start], map.get(arr[start]) - 1);
+                if(map.get(arr[start]) == 0){
+                    map.remove(arr[start]);
+                }
                 start++;
-                set.clear();
-                for (int i = start; i <= end; i++) {
-                    set.add(arr[i]);
-                }
-                if(set.size() <= 2){
-                    System.out.println(end - start + 1);
-                    break;
-                }
-                else{
-                    end--;
-                }
             }
+            max = Math.max(max, right - start + 1);
         }
+        System.out.println(max);
+
+
         br.close();
     }
 }
