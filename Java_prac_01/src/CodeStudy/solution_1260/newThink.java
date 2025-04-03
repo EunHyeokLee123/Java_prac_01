@@ -3,8 +3,7 @@ package CodeStudy.solution_1260;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class newThink {
 
@@ -12,10 +11,41 @@ public class newThink {
     static int point;
     static int start;
     static boolean[] check;
-    static Queue<Integer> Dre;
+    static Stack<Integer> Dre;
+    static Queue<Integer> Bre;
+    static ArrayList<Integer> re1;
+    static ArrayList<Integer> re2;
 
     public static void DFS(int now){
+        Dre.push(now);
+        check[now] = true;
+        re1.add(now);
+        for (int i = 1; i <= point; i++) {
+            if(path[now][i] == 1 && !check[i]){
+                DFS(i);
+            }
+        }
+        Dre.pop();
+        if(Dre.isEmpty()) return;
+    }
 
+    public static void BFS(){
+        check[start] = true;
+        re2.add(start);
+        int tmp = start;
+        while(true){
+            for (int i = 1; i <= point; i++) {
+                if(path[tmp][i] == 1 && !check[i]){
+                    Bre.offer(i); check[i] = true;
+                    re2.add(i);
+                }
+            }
+            if(Bre.isEmpty()){
+                return;
+            }else{
+                tmp = Bre.poll();
+            }
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -37,8 +67,23 @@ public class newThink {
             path[a1][a2] = 1;
             path[a2][a1] = 1;
         }
+        Dre = new Stack<>();
+        Bre = new ArrayDeque<>();
+        re1 = new ArrayList<>();
+        re2 = new ArrayList<>();
 
+        DFS(start);
+        for (int i = 0; i <= point; i++) {
+            check[i] = false;
+        }
+        BFS();
 
-
+        for (Integer i : re1) {
+            System.out.printf("%d ",i);
+        }
+        System.out.println();
+        for (Integer i : re2) {
+            System.out.printf("%d ",i);
+        }
     }
 }
