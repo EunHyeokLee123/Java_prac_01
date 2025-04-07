@@ -39,17 +39,19 @@ public class Main {
             return;
         }
         while(true){
-            int[] now = road.poll();
-            for (int i = 0; i < 8; i++) {
-                int x = now[0] + dx[i];
-                int y = now[1] + dy[i];
-                if(x >= 0 && x< len && y >= 0 && y < len){
-                    if(x == des[0] && y == des[1]){
-                        return;
-                    }
-                    else{
-                        int[] tmp = {x, y};
-                        road.offer(tmp);
+            times++;
+            for (int j = 0; j < road.size(); j++) {
+                int[] now = road.poll();
+                for (int i = 0; i < 8; i++) {
+                    int x = now[0] + dx[i];
+                    int y = now[1] + dy[i];
+                    if (x >= 0 && x < len && y >= 0 && y < len) {
+                        if (x == des[0] && y == des[1]) {
+                            return;
+                        } else {
+                            int[] tmp = {x, y};
+                            road.offer(tmp);
+                        }
                     }
                 }
             }
