@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -13,49 +15,44 @@ public class Main {
     static int[] dx = {1, 2, 2, 1, -1, -2, -2, -1};
     static int[] dy = {2, 1, -1, -2, -2, -1, 1, 2};
 
-    static int times = 0;
-    static boolean find = false;
-    static ArrayDeque<int[]> road;
-
-    public static boolean canGo(int[] now, int[] des, int len){
-        for (int i = 0; i < 8; i++) {
-            int x = now[0] + dx[i];
-            int y = now[1] + dy[i];
-            if(x >= 0 && x< len && y >= 0 && y < len){
-                if(x == des[0] && y == des[1]){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
 
-    public static void BFS(int[] start, int[] des, int len){
-        if (start != des) {
-            road.offer(start);
+    public static int BFS(int[] start, int[] des, int len){
+        ArrayDeque<int[]> road = new ArrayDeque<>();
+        boolean[][] visited = new boolean[len][len];
+        int times = 0;
+        if(Arrays.equals(start, des)){
+            return times;
         }
         else{
-            return;
-        }
-        while(true){
+            road.offer(start);
+            visited[start[0]][start[1]] = true;
             times++;
-            for (int j = 0; j < road.size(); j++) {
+        }
+        while(!road.isEmpty()){
+            int size = road.size();
+            for (int j = 0; j < size; j++) {
                 int[] now = road.poll();
                 for (int i = 0; i < 8; i++) {
                     int x = now[0] + dx[i];
                     int y = now[1] + dy[i];
-                    if (x >= 0 && x < len && y >= 0 && y < len) {
-                        if (x == des[0] && y == des[1]) {
-                            return;
-                        } else {
-                            int[] tmp = {x, y};
-                            road.offer(tmp);
+                    if(x >= 0 && y >= 0 && x < len && y < len){
+                        int[] tmp = {x, y};
+                        if(!visited[x][y]){
+                            if(des[0] == x && des[1] == y){
+                                return times;
+                            }
+                            else{
+                                road.offer(tmp);
+                                visited[x][y] = true;
+                            }
                         }
                     }
                 }
             }
+            times++;
         }
+        return -1;
     }
 
 
@@ -64,7 +61,6 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int count = Integer.parseInt(br.readLine());
         result = new int[count];
-        road = new ArrayDeque<>();
         for (int i = 0; i < count; i++) {
             int len = Integer.parseInt(br.readLine());
             StringTokenizer st1 = new StringTokenizer(br.readLine(), " ");
@@ -75,9 +71,8 @@ public class Main {
             int[] desti = {Integer.parseInt(st2.nextToken())
                     ,Integer.parseInt(st2.nextToken())};
 
-            BFS(start, desti, len);
+            int times = BFS(start, desti, len);
             result[i] = times;
-            times = 0;
         }
 
         for (int i : result) {
