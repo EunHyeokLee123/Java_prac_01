@@ -79,9 +79,6 @@ public class Main {
             System.out.println(i);
         }
 
-
-
-
         br.close();
     }
 }
