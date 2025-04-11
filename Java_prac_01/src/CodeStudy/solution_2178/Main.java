@@ -16,9 +16,13 @@ public class Main {
     static int[] dy = {0, 0, -1, 1};
 
     public static void DFS(int[] now){
-        path[now[1]][now[0]] = 0;
+        // 먼저 방문 처리
+        path[now[0]][now[1]] = 0;
+        // 목표 지점인지 확인
         if(now[0] == cols - 1 && now[1] == rows - 1){
+            // 목표점도 이동 거리에 들어가니 temp++;
             temp++;
+            // 더 적게 이동했다면 답안 최신화
             if(temp < count){
                 count = temp;
             }
@@ -38,7 +42,8 @@ public class Main {
                 }
             }
         }
-        path[now[1]][now[0]] = 1;
+        // 탐색이 끝났다면 해당 지점 다시 방문 가능 처리
+        path[now[0]][now[1]] = 1;
         temp--;
     }
 
@@ -59,12 +64,12 @@ public class Main {
                 }
             }
         }
-//        for (int i = 0; i < rows; i++) {
-//            for (int j = 0; j < cols; j++) {
-//                System.out.print(path[j][i]);
-//            }
-//            System.out.println();
-//        }
+        /*for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(path[j][i]);
+            }
+            System.out.println();
+        }*/
         count = cols * rows;
         int[] start = {0,0};
         DFS(start);
