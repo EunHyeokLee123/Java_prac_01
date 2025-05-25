@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -14,23 +15,13 @@ public class Main {
     static int[][] path;
     static boolean[][] visited;
     static Queue<Integer> queue = new ArrayDeque<>();
+    static ArrayList<int[][]> walls = new ArrayList<>();
+    static ArrayList<int[][]> virous = new ArrayList<>();
     static int x;
     static int y;
 
 
-    /*static int BFS(){
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                if(path[i][j] == 2){
-                    queue.offer(i);
-                }
-            }
-        }
 
-        while(!queue.isEmpty()){
-
-        }
-    }*/
 
     public static void main(String[] args) throws IOException {
 
