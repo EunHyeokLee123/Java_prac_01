@@ -25,45 +25,29 @@ public class Main {
     static int y;
     static int[][] arr;
     static int cheeseCount;
-    static Queue<Point> queue = new LinkedList<Point>();
 
-    public static boolean BFS(int time) {
-        int size = queue.size();
-        boolean flag = false;
+    public static void BFS() {
+        Queue<Point> queue = new LinkedList<>();
         boolean[][] visited = new boolean[y][x];
         queue.offer(new Point(0, 0));
-        while(size > 0){
+        visited[0][0] = true;
+        while(!queue.isEmpty()) {
             Point p = queue.poll();
-            visited[p.y][p.x] = true;
             for (int i = 0; i < 4; i++) {
                 int tx = p.x + dx[i];
                 int ty = p.y + dy[i];
-                if(tx >= 0 && ty >= 0 && tx < x && ty < y){
-                    if(arr[ty][tx] == 0 && !visited[ty][tx]){
+                if(tx >= 0 && ty >= 0 && tx < x && ty < y && !visited[ty][tx]){
+                    visited[ty][tx] = true;
+                    if(arr[ty][tx] == 0){
                         queue.offer(new Point(tx, ty));
                     }
                     if(arr[ty][tx] == 1){
-                        flag = true;
-                        arr[ty][tx] = time + 1;
+                        arr[ty][tx] = 0;
                         cheeseCount--;
                     }
                 }
             }
-            size --;
         }
-        return flag;
-    }
-
-    public static int findPrevLast(int tarTime) {
-        int count = 0;
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                if(arr[i][j] == tarTime){
-                    count++;
-                }
-            }
-        }
-        return count;
     }
 
 
@@ -83,15 +67,15 @@ public class Main {
                 }
             }
         }
-        int time = 1;
-        while(cheeseCount > 0){
-            boolean flag = BFS(time);
-            if(flag) time++;
+        int time = 0; int restCheese = 0;
+        while(cheeseCount != 0){
+            time++;
+            restCheese = cheeseCount;
+            BFS();
         }
 
-        int last = findPrevLast(time - 1);
-        System.out.println(time - 1);
-        System.out.println(last);
+        System.out.println(time);
+        System.out.println(restCheese);
 
         br.close();
     }
