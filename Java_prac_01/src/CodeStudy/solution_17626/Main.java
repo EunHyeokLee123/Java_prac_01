@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-    static final int LEN_MAX = 4;
 
     public static void main(String[] args) throws IOException {
 

@@ -42,7 +42,7 @@ public class Main {
         }
 
         for (int i = 3; i <= len; i++) {
-            dp[i] = Math.max(dp[i - 3] + stairs[i - 1] +stairs[i], dp[i - 2] + stairs[i]);
+            dp[i] = Math.max(dp[i - 3] + stairs[i - 1] + stairs[i], dp[i - 2] + stairs[i]);
         }
 
         System.out.println(dp[len]);

@@ -18,15 +18,6 @@ public class Main {
             this.start_time = start_time;
             this.check_time = check_time;
         }
-
-        public boolean sort(cow a1, cow a2){
-            if(a1.start_time <= a2.start_time){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
     }
 
 
