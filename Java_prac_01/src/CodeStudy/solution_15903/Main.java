@@ -9,8 +9,17 @@ public class Main {
 
 
     public static int[] findTwo(int[] arr){
-        int first = 0;
-        int second = 1;
+        int first;
+        int second;
+
+        if(arr[0] > arr[1]){
+            first = 1;
+            second = 0;
+        }
+        else{
+            first = 0;
+            second = 1;
+        }
         for (int i = 2; i < arr.length; i++) {
             if(arr[i] < arr[first]){
                 second = first;
@@ -39,7 +48,6 @@ public class Main {
         for (int i = 0; i < play; i++) {
             int[] tmp = findTwo(cardList);
             int plusMin = cardList[tmp[0]] + cardList[tmp[1]];
-            System.out.printf("%d, %d, %d \n", cardList[tmp[0]], cardList[tmp[1]], plusMin);
             cardList[tmp[0]] = plusMin;
             cardList[tmp[1]] = plusMin;
         }
