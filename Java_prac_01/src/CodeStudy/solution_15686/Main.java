@@ -39,7 +39,7 @@ public class Main {
         }
         for(int i = start; i < n; i++){
             current.add(i);
-            combiBackTrack(i+1, n, m, current, result);
+            combiBackTrack(i + 1, n, m, current, result);
             current.remove(current.size()-1);
         }
     }
