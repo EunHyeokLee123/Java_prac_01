@@ -4,69 +4,68 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
 
     static int[][] arr;
 
-    public static class Point {
-        int x;
-        int y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public static Point whereSector(Point p) {
-        int x = p.x; int y = p.y;
-        if(x < 3){
-            if(y < 3){
-                return new Point(0, 0);
-            }
-            else if(y < 6){
-                return new Point(0, 3);
-            }
-            else{
-                return new Point(0, 6);
+    public static boolean check(int x, int y, int value) {
+        // 가로
+        for (int i = 0; i < 9; i++) {
+            if(arr[i][x] == value){
+                return false;
             }
         }
-        else if(x < 6){
-            if(y < 3){
-                return new Point(3, 0);
-            }
-            else if(y < 6){
-                return new Point(3, 3);
-            }
-            else{
-                return new Point(3, 6);
+        // 세로
+        for (int i = 0; i < 9; i++) {
+            if(arr[y][i] == value){
+                return false;
             }
         }
-        else{
-            if(y < 3){
-                return new Point(6, 0);
-            }
-            else if(y < 6){
-                return new Point(6, 3);
-            }
-            else{
-                return new Point(6, 6);
-            }
-        }
-    }
-
-    public static List<Integer> canRectNum (Point now){
-        boolean[] nums = new boolean[11];
-
-        Point start = whereSector(now);
-
-        int now_x = start.x; int now_y = start.y;
+        // 사각형
+        int start_x = (x / 3) * 3;
+        int start_y = (y / 3) * 3;
         for (int i = 0; i < 3; i++) {
-
+            for (int j = 0; j < 3; j++) {
+                int dx = start_x + i;
+                int dy = start_y + j;
+                if(arr[dy][dx] == value){
+                    return false;
+                }
+            }
         }
+        return true;
+    }
+
+    public static void DFS(int y, int x) {
+        if(x == 9) {
+            DFS(y + 1, 0);
+            return;
+        }
+        if(y == 9) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    int temp = arr[i][j];
+                    sb.append(temp).append(" ");
+                }
+                sb.append("\n");
+            }
+            System.out.println(sb);
+            System.exit(0);
+        }
+        if(arr[y][x] == 0){
+            for (int i = 1; i < 10; i++) {
+                if(check(x, y, i)) {
+                    arr[y][x] = i;
+                    DFS(y, x + 1);
+                }
+            }
+            arr[y][x] = 0;
+            return;
+        }
+        DFS(y, x + 1);
     }
 
     public static void main(String[] args) throws IOException {
@@ -75,7 +74,6 @@ public class Main {
         // y,x
         arr = new int[len][len];
         // 0인 값들을 담을 리스트
-        List<Point> targets = new ArrayList<>();
 
         for (int i = 0; i < len; i++) {  // y
             StringTokenizer st = new StringTokenizer(br.readLine(), " ");
@@ -83,21 +81,10 @@ public class Main {
             for (int j = 0; j < len; j++) {   // x
                 int temp = Integer.parseInt(st.nextToken());
                 arr[i][j] = temp;
-                if(temp == 0) {
-                    targets.add(new Point(j, i));
-                }
             }
         }
 
-        // 해당 지점의 방문 여부
-        boolean[] visited = new boolean[targets.size()];
-
-
-
-
-
-
-
+        DFS(0, 0);
 
 
         br.close();
