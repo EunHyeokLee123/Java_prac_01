@@ -52,7 +52,9 @@ public class Main {
             if(p2 != 1) {
                 result += p1 * p2;
             }
+            // 남은 숫자 중 하나가 1이라면
             else {
+                // 곱하지 않고 더함.
                 result += (p1 + p2);
             }
             // 맨 뒤 2개 삭제
