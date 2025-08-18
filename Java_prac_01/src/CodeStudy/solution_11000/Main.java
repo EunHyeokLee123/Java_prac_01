@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -12,22 +13,11 @@ public class Main {
     static class Lesson {
         int start;
         int end;
-        boolean held;
 
         Lesson(int start, int end) {
             this.start = start;
             this.end = end;
-            this.held = false;
         }
-    }
-
-    static int isEnd(List<Lesson> list) {
-        for (int i = 0; i < list.size(); i++) {
-            if(!list.get(i).held) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     public static void main(String[] args) throws IOException {
@@ -42,33 +32,20 @@ public class Main {
             list.add(lesson);
         }
 
-        // start를 기준으로 오름차순 -> 같다면 end를 기준으로
-        list.sort((a, b) -> {
-            if(a.start == b.start) {
-                return a.end - b.end;
-            }
-            return a.start - b.start;
-        });
+        // start를 기준으로 오름차순
+        list.sort((a, b) -> a.start - b.start);
 
-        int count = 0;
+        // 우선순위 큐: 종료 시간이 빠른 순
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
 
-        while(true) {
-            int start = isEnd(list);
-            if(start == -1) {
-                break;
+        for (Lesson lec : list) {
+            if (!pq.isEmpty() && pq.peek() <= lec.start) {
+                pq.poll(); // 같은 강의실 사용
             }
-            list.get(start).held = true;
-            int time = list.get(start).end;
-            for (int i = start + 1; i < list.size(); i++) {
-                if(list.get(i).start >= time && !list.get(i).held) {
-                    time = list.get(i).end;
-                    list.get(i).held = true;
-                }
-            }
-            count++;
+            pq.offer(lec.end); // 새로운 강의실 or 갱신
         }
 
-        System.out.println(count);
+        System.out.println(pq.size());
 
         br.close();
     }
