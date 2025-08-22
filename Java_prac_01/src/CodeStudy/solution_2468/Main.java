@@ -11,77 +11,34 @@ public class Main {
     static int[] dy = {0, 0, -1, 1};
 
     static class Point {
-        int value;
-        boolean visited;
-        public Point(int value) {
-            this.value = value;
-            this.visited = false;
-        }
-    }
-
-    static class XY {
         int x;
         int y;
-        public XY(int x, int y) {
+        public Point(int x, int y) {
             this.x = x;
             this.y = y;
         }
     }
 
-    static int BFS (Point[][] arr, int length, int limit) {
-        Queue<XY> queue = new LinkedList<>();
-        int step = 0;
-        while(true) {
-            XY start = findFirst(arr, limit, length);
-            if(start == null) {
-                break;
-            }
-            step++;
+
+    static void BFS(int[][] arr, boolean[][] visited, int length, int limit, Point start) {
+
+        Queue<Point> queue = new LinkedList<>();
+            // 찾으면 넣기
             queue.offer(start);
-            while (!queue.isEmpty()) {
-                XY now = queue.poll();
-                arr[now.y][now.x].visited = true;
+            visited[start.y][start.x] = true;
+            while(!queue.isEmpty()) {
+                Point temp = queue.poll();
                 for (int i = 0; i < 4; i++) {
-                    int newX = now.x + dx[i];
-                    int newY = now.y + dy[i];
-                    if (newX >= 0 && newX < length && newY >= 0 && newY < limit) {
-                        if (arr[newY][newX].value > limit && !arr[newY][newX].visited) {
-                            queue.offer(new XY(newX, newY));
-                            arr[newY][newX].visited = true;
+                    int newX = temp.x + dx[i];
+                    int newY = temp.y + dy[i];
+                    if(newX >= 0 && newX < length && newY >= 0 && newY < length) {
+                        if(arr[newY][newX] > limit && !visited[newY][newX]) {
+                            visited[newY][newX] = true;
+                            queue.offer(new Point(newX, newY));
                         }
                     }
                 }
             }
-        }
-        return step;
-    }
-    
-    // 해당 높이에서 탐색을 해야할 점을 찾음
-    static XY findFirst(Point[][] arr, int height, int length) {
-        // y
-        for (int i = 0; i < length; i++) {
-            // x
-            for (int j = 0; j < length; j++) {
-                if(arr[i][j].value > height && arr[i][j].visited == false) {
-                    // {y, x}
-                    return new XY(j, i);
-                }
-            }
-        }
-        return null;
-    }
-    
-    // 한 높이에서 끝나면 visited 다시 전부 false로 바꿈
-    static void NewStart(Point[][] arr, int length, int height) {
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-                if(arr[i][j].value > height) {
-                    if(arr[i][j].visited == true) {
-                        arr[i][j].visited = false;
-                    }
-                }
-            }
-        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -89,34 +46,41 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int length = Integer.parseInt(br.readLine());
         // y, x
-        Point[][] arr = new Point[length][length];
+        int[][] arr = new int[length][length];
+        int min = 101;
         int max = 0;
         for (int i = 0; i < length; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine(), " ");
             for (int j = 0; j < length; j++) {
-                int input = Integer.parseInt(st.nextToken());
-                arr[i][j] = new Point(input);
-                if(input > max) {
-                    max = input;
+                int temp = Integer.parseInt(st.nextToken());
+                arr[i][j] = temp;
+                if(temp > max) {
+                   max = temp;
+                }
+                else if (temp < min) {
+                    min = temp;
                 }
             }
         }
-
-        // 최대 조각 수
-        int result = 0;
-        // 현재 탐색 높이
-        int now = 1;
-        // 1부터 높이 최대값까지 탐색을 하자
-        while(now <= max) {
-
-            int midResult = BFS(arr, length, now);
-            if(midResult > result) {
-                result = midResult;
+        int result = 1;
+        int idx = min - 1;
+        while(idx <= max + 1) {
+            boolean[][] visited = new boolean[length][length];
+            int cnt = 0;
+            for (int i = 0; i < length; i++) {
+                for (int j = 0; j < length; j++) {
+                    if(arr[i][j] > idx && !visited[i][j]) {
+                        BFS(arr, visited, length, idx, new Point(j, i));
+                        cnt++;
+                    }
+                }
             }
-            NewStart(arr, length, now);
-            now++;
-
+            if(cnt > result) {
+                result = cnt;
+            }
+            idx++;
         }
+
         System.out.println(result);
 
         br.close();
