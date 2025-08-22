@@ -27,6 +27,34 @@ public class Main {
             this.y = y;
         }
     }
+
+    static int BFS (Point[][] arr, int length, int limit) {
+        Queue<XY> queue = new LinkedList<>();
+        int step = 0;
+        while(true) {
+            XY start = findFirst(arr, limit, length);
+            if(start == null) {
+                break;
+            }
+            step++;
+            queue.offer(start);
+            while (!queue.isEmpty()) {
+                XY now = queue.poll();
+                arr[now.y][now.x].visited = true;
+                for (int i = 0; i < 4; i++) {
+                    int newX = now.x + dx[i];
+                    int newY = now.y + dy[i];
+                    if (newX >= 0 && newX < length && newY >= 0 && newY < limit) {
+                        if (arr[newY][newX].value > limit && !arr[newY][newX].visited) {
+                            queue.offer(new XY(newX, newY));
+                            arr[newY][newX].visited = true;
+                        }
+                    }
+                }
+            }
+        }
+        return step;
+    }
     
     // 해당 높이에서 탐색을 해야할 점을 찾음
     static XY findFirst(Point[][] arr, int height, int length) {
@@ -44,7 +72,7 @@ public class Main {
     }
     
     // 한 높이에서 끝나면 visited 다시 전부 false로 바꿈
-    static Point[][] NewStart(Point[][] arr, int length, int height) {
+    static void NewStart(Point[][] arr, int length, int height) {
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
                 if(arr[i][j].value > height) {
@@ -54,7 +82,6 @@ public class Main {
                 }
             }
         }
-        return arr;
     }
 
     public static void main(String[] args) throws IOException {
@@ -82,12 +109,15 @@ public class Main {
         // 1부터 높이 최대값까지 탐색을 하자
         while(now <= max) {
 
-            XY start = findFirst(arr, arr.length, now);
+            int midResult = BFS(arr, length, now);
+            if(midResult > result) {
+                result = midResult;
+            }
+            NewStart(arr, length, now);
+            now++;
 
         }
-
-
-
+        System.out.println(result);
 
         br.close();
     }
