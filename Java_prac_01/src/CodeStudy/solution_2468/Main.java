@@ -3,9 +3,7 @@ package CodeStudy.solution_2468;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
@@ -29,21 +27,16 @@ public class Main {
             this.y = y;
         }
     }
-
-    /*static boolean BFS(Point[][] arr, int heigth, int length) {
-
-    }*/
     
     // 해당 높이에서 탐색을 해야할 점을 찾음
-    static int[] findFirst(Point[][] arr, int height, int length) {
+    static XY findFirst(Point[][] arr, int height, int length) {
         // y
         for (int i = 0; i < length; i++) {
             // x
             for (int j = 0; j < length; j++) {
                 if(arr[i][j].value > height && arr[i][j].visited == false) {
                     // {y, x}
-                    int[] result = {i, j};
-                    return result;
+                    return new XY(j, i);
                 }
             }
         }
@@ -89,8 +82,7 @@ public class Main {
         // 1부터 높이 최대값까지 탐색을 하자
         while(now <= max) {
 
-            int[] start = findFirst(arr, arr.length, now);
-
+            XY start = findFirst(arr, arr.length, now);
 
         }
 
