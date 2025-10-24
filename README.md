@@ -3,7 +3,7 @@
 
 *자바 연습용 깃허브 저장소*
 
-*Java_prac_01/src/CodeStudy에 코딩테스트 코드가 있습니다.*
+### *Java_prac_01/src/CodeStudy에 코딩테스트 코드가 있습니다.*
 
 - 데이터타입, 연산자
 - 조건문, 반복문
