@@ -54,36 +54,42 @@ public class Main {
                                 // B일때만 탐색범위 추가
                                 if(arr[ny][nx] == 'B') {
                                     queue.add(new Point(nx, ny));
+                                    // 해당 점 방문 처리
+                                    visited[ny][nx] = true;
                                 }
                             }
                             // 현재 점이 R, G인 경우
                             else {
                                 if(arr[ny][nx] == 'R' || arr[ny][nx] == 'G') {
                                     queue.add(new Point(nx, ny));
+                                    // 해당 점 방문 처리
+                                    visited[ny][nx] = true;
                                 }
                             }
-                            // 해당 점 방문 처리
-                            visited[ny][nx] = true;
                         }
                         // 적록색약이 아닌 경우
                         else {
                             if (arr[curr.y][curr.x] == 'R') {
                                 if(arr[ny][nx] == 'R') {
                                     queue.add(new Point(nx, ny));
+                                    // 해당 점 방문 처리
+                                    visited[ny][nx] = true;
                                 }
                             }
                             else if (arr[curr.y][curr.x] == 'G') {
                                 if(arr[ny][nx] == 'G') {
                                     queue.add(new Point(nx, ny));
+                                    // 해당 점 방문 처리
+                                    visited[ny][nx] = true;
                                 }
                             }
                             else {
                                 if(arr[ny][nx] == 'B') {
                                     queue.add(new Point(nx, ny));
+                                    // 해당 점 방문 처리
+                                    visited[ny][nx] = true;
                                 }
                             }
-                            // 해당 점 방문 처리
-                            visited[ny][nx] = true;
                         }
                     }
                 }
