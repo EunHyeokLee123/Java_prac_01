@@ -26,251 +26,99 @@ public class Main {
     }
 
     static List<Point> snake = new ArrayList<Point>();
-    static char way = 'e';
+    static int way = 0;
     static int[][] arr;
     static boolean[][] visit;
-    static int time = 1;
+    static int time = 0;
     static int N;
+    // 동서남북
+    static final int[] dx = {1, -1, 0, 0};
+    static final int[] dy = {0, 0, 1, -1};
 
     static void getDir(char tar) {
-        if(way == 'e') {
+        if(way == 0) {
             if(tar == 'D') {
-                way = 's';
+                way = 2;
             }
             else {
-                way = 'n';
+                way = 3;
             }
         }
-        else if(way == 'w') {
+        else if(way == 1) {
             if(tar == 'D') {
-                way = 'n';
+                way = 3;
             }
             else {
-                way = 's';
+                way = 2;
             }
         }
-        else if(way == 'n') {
+        else if(way == 2) {
             if(tar == 'D') {
-                way = 'e';
+                way = 1;
             }
             else {
-                way = 'w';
+                way = 0;
             }
         }
-        else {
+        else if(way == 3) {
             if(tar == 'D') {
-                way = 'w';
+                way = 0;
             }
             else {
-                way = 'e';
+                way = 1;
             }
         }
     }
 
     static boolean Step() {
-            Point head = snake.get(0);
-
-            if(way == 'e') {
-                if(head.x + 1 <= N) {
-                    // 꼬리가 잘리는 경우
-                    if(arr[head.y][head.x + 1] == 0) {
-                        // 갈려는 곳이 뱀의 몸인 경우
-                        if(visit[head.y][head.x + 1]) {
-                            Point tail = snake.get(snake.size() - 1);
-                            // 갈려는 곳이 꼬리인 경우 --> 문제가 되지 않는 상황임
-                            if(head.x + 1 == tail.x && head.y == tail.y) {
-                                // 꼬리 삭제
-                                snake.remove(snake.size() - 1);
-                                // 꼬리를 머리로
-                                snake.add(0, tail);
-                            }
-                            // 갈려는 곳이 꼬리가 아닌 경우
-                            else {
-                                // 실패
-                                return false;
-                            }
-                        }
-                        // 겹치지 않는 경우 -> 문제 없음
-                        else {
-                            Point tail = snake.get(snake.size() - 1);
-                            visit[tail.y][tail.x] = false;
-                            // 꼬리 삭제
-                            snake.remove(snake.size() - 1);
-                            // 새로운 머리
-                            snake.add(0, new Point(head.x + 1, head.y));
-                            visit[head.y][head.x + 1] = true;
-                        }
-                    }
-                    // 꼬리가 잘리지 않는 경우
-                    else {
-                        // 몸체와 겹치는 경우
-                        if(visit[head.y][head.x + 1]) {
-                            return false;
-                        }
-                        // 몸과 겹치지 않는 경우
-                        else {
-                            visit[head.y][head.x + 1] = true;
-                            snake.add(0, new Point(head.x + 1, head.y));
-                        }
-                    }
-                    arr[head.y][head.x + 1] = 0;
-                }
-                // 벽과 부딪히는 경우
-                else {
-                    return false;
-                }
+        Point head = snake.get(0);
+        int nx = head.x + dx[way];
+        int ny = head.y + dy[way];
+        // 벽 여부
+        if(nx > 0 && nx <= N && ny > 0 && ny <= N) {
+            // 충돌 여부
+            boolean hit = false;
+            if(visit[ny][nx]) {
+                hit = true;
             }
-            else if(way == 'w') {
-                if(head.x - 1 > 0) {
-                    // 꼬리가 잘리는 경우
-                    if(arr[head.y][head.x - 1] == 0) {
-                        // 갈려는 곳이 뱀의 몸인 경우
-                        if(visit[head.y][head.x - 1]) {
-                            Point tail = snake.get(snake.size() - 1);
-                            // 갈려는 곳이 꼬리인 경우 --> 문제가 되지 않는 상황임
-                            if(head.x - 1 == tail.x && head.y == tail.y) {
-                                // 꼬리 삭제
-                                snake.remove(snake.size() - 1);
-                                // 꼬리를 머리로
-                                snake.add(0, tail);
-                            }
-                            // 갈려는 곳이 꼬리가 아닌 경우
-                            else {
-                                // 실패
-                                return false;
-                            }
-                        }
-                        // 겹치지 않는 경우 -> 문제 없음
-                        else {
-                            Point tail = snake.get(snake.size() - 1);
-                            visit[tail.y][tail.x] = false;
-                            // 꼬리 삭제
-                            snake.remove(snake.size() - 1);
-                            // 새로운 머리
-                            snake.add(0, new Point(head.x - 1, head.y));
-                            visit[head.y][head.x - 1] = true;
-                        }
-                    }
-                    // 꼬리가 잘리지 않는 경우
-                    else {
-                        // 몸체와 겹치는 경우
-                        if(visit[head.y][head.x - 1]) {
-                            return false;
-                        }
-                        // 몸과 겹치지 않는 경우
-                        else {
-                            visit[head.y][head.x - 1] = true;
-                            snake.add(0, new Point(head.x - 1, head.y));
-                        }
-                    }
-                    arr[head.y][head.x - 1] = 0;
-                }
-                // 벽과 부딪히는 경우
-                else {
-                    return false;
-                }
+            // 사과가 있는 경우
+            if(arr[ny][nx] == 1) {
+                // 충돌했으면 무조건 실패
+                if(hit) return false;
+                // 충돌없으면 머리 새로 늘리기
+                visit[ny][nx] = true;
+                snake.add(0, new Point(nx, ny));
+                arr[ny][nx] = 0;
             }
-            else if (way == 's') {
-                if(head.y + 1 <= N) {
-                    // 꼬리가 잘리는 경우
-                    if(arr[head.y + 1][head.x] == 0) {
-                        // 갈려는 곳이 뱀의 몸인 경우
-                        if(visit[head.y + 1][head.x]) {
-                            Point tail = snake.get(snake.size() - 1);
-                            // 갈려는 곳이 꼬리인 경우 --> 문제가 되지 않는 상황임
-                            if(head.x == tail.x && head.y + 1 == tail.y) {
-                                // 꼬리 삭제
-                                snake.remove(snake.size() - 1);
-                                // 꼬리를 머리로
-                                snake.add(0, tail);
-                            }
-                            // 갈려는 곳이 꼬리가 아닌 경우
-                            else {
-                                // 실패
-                                return false;
-                            }
-                        }
-                        // 겹치지 않는 경우 -> 문제 없음
-                        else {
-                            Point tail = snake.get(snake.size() - 1);
-                            visit[tail.y][tail.x] = false;
-                            // 꼬리 삭제
-                            snake.remove(snake.size() - 1);
-                            // 새로운 머리
-                            snake.add(0, new Point(head.x, head.y + 1));
-                            visit[head.y + 1][head.x] = true;
-                        }
-                    }
-                    // 꼬리가 잘리지 않는 경우
-                    else {
-                        // 몸체와 겹치는 경우
-                        if(visit[head.y + 1][head.x]) {
-                            return false;
-                        }
-                        // 몸과 겹치지 않는 경우
-                        else {
-                            visit[head.y + 1][head.x] = true;
-                            snake.add(0, new Point(head.x, head.y + 1));
-                        }
-                    }
-                    arr[head.y + 1][head.x] = 0;
-                }
-                // 벽과 부딪히는 경우
-                else {
-                    return false;
-                }
-            }
-            // 북쪽
+            // 사과가 없는 경우
             else {
-                if(head.y - 1 > 0) {
-                    // 꼬리가 잘리는 경우
-                    if(arr[head.y - 1][head.x] == 0) {
-                        // 갈려는 곳이 뱀의 몸인 경우
-                        if(visit[head.y - 1][head.x]) {
-                            Point tail = snake.get(snake.size() - 1);
-                            // 갈려는 곳이 꼬리인 경우 --> 문제가 되지 않는 상황임
-                            if(head.x == tail.x && head.y - 1 == tail.y) {
-                                // 꼬리 삭제
-                                snake.remove(snake.size() - 1);
-                                // 꼬리를 머리로
-                                snake.add(0, tail);
-                            }
-                            // 갈려는 곳이 꼬리가 아닌 경우
-                            else {
-                                // 실패
-                                return false;
-                            }
-                        }
-                        // 겹치지 않는 경우 -> 문제 없음
-                        else {
-                            Point tail = snake.get(snake.size() - 1);
-                            visit[tail.y][tail.x] = false;
-                            // 꼬리 삭제
-                            snake.remove(snake.size() - 1);
-                            // 새로운 머리
-                            snake.add(0, new Point(head.x, head.y - 1));
-                            visit[head.y - 1][head.x] = true;
-                        }
+                Point tail = snake.get(snake.size() - 1);
+                if(hit) {
+                    // 헤드가 움직일 부분이 꼬리인 경우
+                    if(tail.x == nx && tail.y == ny) {
+                        // 문제 없음
+                        // 꼬리 자르기
+                        visit[tail.y][tail.x] = false;
+                        snake.remove(snake.size() - 1);
+                        // 새로운 머리 추가
+                        visit[ny][nx] = true;
+                        snake.add(0, new Point(nx, ny));
                     }
-                    // 꼬리가 잘리지 않는 경우
                     else {
-                        // 몸체와 겹치는 경우
-                        if(visit[head.y - 1][head.x]) {
-                            return false;
-                        }
-                        // 몸과 겹치지 않는 경우
-                        else {
-                            visit[head.y - 1][head.x] = true;
-                            snake.add(0, new Point(head.x, head.y - 1));
-                        }
+                        return false;
                     }
-                    arr[head.y - 1][head.x] = 0;
                 }
-                // 벽과 부딪히는 경우
                 else {
-                    return false;
+                    visit[tail.y][tail.x] = false;
+                    snake.remove(snake.size() - 1);
+                    visit[ny][nx] = true;
+                    snake.add(0, new Point(nx, ny));
                 }
             }
+        }
+        else {
+            return false;
+        }
         return true;
     }
 
@@ -304,11 +152,11 @@ public class Main {
             if(!Step()) {
                 break;
             }
+            time++;
             if(idx < count && ops[idx].len == time) {
                 getDir(ops[idx].dir.charAt(0));
                 idx++;
             }
-            time++;
 
         }
 
