@@ -71,25 +71,31 @@ public class Main {
                 arr[now[0]][now[1]] = 2;
             }
             // 주변 4칸 중 청소할 칸이 있는지 여부
-            boolean flag = false;
+            boolean exist = false;
             for(int i = 0; i < 4; i++) {
                 int nx = now[1] + dx[i];
                 int ny = now[0] + dy[i];
-                if(nx >= 0 && nx < N && ny >= 0 && ny < M) {
+                if(nx >= 0 && nx < M && ny >= 0 && ny < N) {
                     if(arr[ny][nx] == 0) {
-                        flag = true;
+                        exist = true;
                     }
                 }
             }
             // 청소할 칸이 있는 경우
-            if(flag) {
-                // 일단 반시계 회전
-                getNextWay();
-                // 지금 방향 기준 앞쪽
-                int[] temp = getFront(now);
-                // 앞쪽이 청소가 가능하면 앞으로 전진
-                if(temp[0] >= 0 && temp[0] < N && temp[1] >= 0 && temp[1] < M) {
-                    now = temp;
+            if(exist) {
+                while(true) {
+                    getNextWay();
+                    // 앞에 보기
+                    int[] front = getFront(now);
+                    // 유효인덱스 확인
+                    if(front[0] >= 0 && front[1] >= 0 && front[0] < N && front[1] < M) {
+                        // 앞이 청소할 곳인지 확인
+                        if(arr[front[0]][front[1]] == 0) {
+                            // 앞으로 이동
+                            now = front;
+                            break;
+                        }
+                    }
                 }
             }
             // 청소할 칸이 없는 경우
