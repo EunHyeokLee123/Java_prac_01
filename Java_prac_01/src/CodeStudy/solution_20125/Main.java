@@ -126,7 +126,7 @@ public class Main {
         rightLeg();
 
         StringBuilder sb = new StringBuilder("");
-        sb.append(heart.x + 1).append(" ").append(heart.y + 1).append("\n");
+        sb.append(heart.y + 1).append(" ").append(heart.x + 1).append("\n");
         for(int i = 0; i < 5; i++) {
             sb.append(result[i]).append(" ");
         }
