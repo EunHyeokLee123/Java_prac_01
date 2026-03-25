@@ -3,53 +3,70 @@ package CodeStudy.solution_9017;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
-    static int length;
-    static int[] arr;
 
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int total = Integer.parseInt(br.readLine());
-        for (int i = 0; i < total; i++) {
-            length = Integer.parseInt(br.readLine());
-            arr = new int[length];
+        int N = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < N; i++) {
+            int len = Integer.parseInt(br.readLine());
             StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-            HashMap<Integer, Integer> map = new HashMap<>();
-            for (int j = 0; j < length; j++) {
-                int temp = Integer.parseInt(st.nextToken());
-                arr[j] = temp;
-                map.put(temp, map.getOrDefault(temp, 0) + 1);
+            // 팀의 참가자 수를 저장할 map
+            Map<Integer, Integer> map = new HashMap<>();
+            int[] temp = new int[len];
+            for(int u = 0; u < len; u++) {
+                int num = Integer.parseInt(st.nextToken());
+                temp[u] = num;
+                map.put(num, map.getOrDefault(num, 0) + 1);
             }
-            List<Integer> no = new ArrayList<>();
-            for(int tar : map.keySet()) {
-                if(map.get(tar) < 6) {
-                    no.add(tar);
-                }
-            }
+
+            Map<Integer, List<Integer>> score = new HashMap<>();
             int idx = 1;
-            HashMap<Integer, List<Integer>> mp = new HashMap<>();
-            for(int j = 0; j < arr.length; j++) {
-                if(!no.contains(arr[j])) {
-                    if(!mp.containsKey(arr[j])) {
-                        mp.put(arr[j], new ArrayList<>());
+            for(int k = 0; k < len; k++) {
+                if(map.get(temp[k]) >= 6) {
+                    if(!score.containsKey(temp[k])) {
+                        score.put(temp[k], new ArrayList<>());
                     }
-                    if(mp.get(arr[j]).size() < 5) {
-                        mp.get(arr[j]).add(j);
-                    }
+                    score.get(temp[k]).add(idx);
                     idx++;
                 }
             }
 
+            int[] result = new int[3];
+            for(Integer key : score.keySet()) {
+                int sum = 0;
+                for(int j = 0; j < 4; j++) {
+                    sum += score.get(key).get(j);
+                }
+                int five = score.get(key).get(4);
+                // 첫 점수 계산 인 경우
+                if(result[0] == 0) {
+                    result[0] = key;
+                    result[1] = sum;
+                    result[2] = five;
+                }
+                else {
+                    if(result[1] > sum) {
+                        result[0] = key;
+                        result[1] = sum;
+                        result[2] = five;
+                    }
+                    else if(result[1] == sum) {
+                        if(result[2] > five) {
+                            result[0] = key;
+                            result[2] = five;
+                        }
+                    }
+                }
+            }
+            sb.append(result[0]).append("\n");
         }
 
-
+        System.out.println(sb);
 
         br.close();
     }
