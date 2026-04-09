@@ -3,6 +3,7 @@ package CodeStudy.solution_2493;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -15,31 +16,26 @@ public class Main {
         for (int i = 0; i < length; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
-        int[] result = new int[length];
-        result[0] = 0;
-        int now = 0;
-        int idx = now + 1;
-        while(idx < length) {
-            if(arr[now] >= arr[idx]) {
-                result[idx] = now + 1;
-                if(idx < length - 1) {
-                    if (arr[idx] > arr[idx + 1]) {
-                        now = idx;
-                    }
+
+        StringBuilder sb = new StringBuilder();
+        Stack<Integer> stack = new Stack<>();
+        for(int i = 0; i < length; i++) {
+            while(!stack.isEmpty()) {
+                if(arr[stack.peek()] >= arr[i]) {
+                    sb.append(stack.peek() + 1).append(" ");
+                    break;
                 }
+                stack.pop();
             }
-            else {
-                now = idx;
+
+            if(stack.isEmpty()) {
+                sb.append(0).append(" ");
             }
-            idx++;
+
+            stack.push(i);
         }
 
-        String ans = "";
-        for (int i : result) {
-            ans += i + " ";
-        }
-
-        System.out.println(ans);
+        System.out.println(sb);
 
         br.close();
     }
